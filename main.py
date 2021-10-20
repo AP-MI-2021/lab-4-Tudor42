@@ -1,3 +1,72 @@
+def cmmdc(a, b):
+    """
+    Returneaza cmmdc a lui a si b
+    param:
+        a - primul numar
+        b - al doilea numar
+    return:
+        cmmdc(a, b)
+    """
+    x = a
+    r = b
+    while r != 0:
+        y = x % r
+        x = r
+        r = y
+    return x
+
+
+def test_cmmdc():
+    assert cmmdc(10, 5) == 5
+    assert cmmdc(24, 18) == 6
+    assert cmmdc(5, 2) == 1
+
+
+def inversare_string(x):
+    """
+    Returneaza stringul x inversat
+    param:
+        x - stringul
+    return:
+        stringul inversat
+    """
+    return x[::-1]
+
+
+def test_inversare_string():
+    assert inversare_string("erp") == "pre"
+    assert inversare_string("1020") == "0201"
+    assert inversare_string("") == ""
+
+
+def modificare_lista(lst):
+    """
+    Inlocuieste numerele pozitive nenule cu cmmdc
+    param:
+        lst - lista de numere
+    return:
+        Lista modificata
+    """
+    x = 0  # Pastreaza cel mai mic divizor al numerelor pozitive
+    for i in lst:
+        if i > 0:
+            x = cmmdc(x, i)
+    for i in range(len(lst)):
+        if lst[i] > 0:
+            lst[i] = x
+        elif lst[i] < 0:
+            s = '-' + inversare_string(str(lst[i])[1:])
+            lst[i] = int(s)
+    return lst
+
+
+def test_modificare_lista():
+    assert modificare_lista([-76, 12, 24, -13, 144]) == [-67, 12, 12, -31, 12]
+    assert modificare_lista([4]) == [4]
+    assert modificare_lista([2, 8]) == [2, 2]
+    assert modificare_lista([]) == []
+
+
 def is_prime(n):
     """
     Verifica daca un numar este prim
@@ -135,6 +204,9 @@ def run_tests():
     test_is_prime()
     test_is_superprime()
     test_numere_superprime()
+    test_cmmdc()
+    test_inversare_string()
+    test_modificare_lista()
 
 
 def print_menu():
@@ -178,8 +250,7 @@ def main():
             for i in numere_superprime(lst):
                 print(i)
         elif x == "5":
-            # TODO
-            pass
+            print(modificare_lista(lst))
         elif x == "6":
             break
         else:
