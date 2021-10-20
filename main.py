@@ -1,3 +1,69 @@
+def is_prime(n):
+    """
+    Verifica daca un numar este prim
+    param:
+        n - numar
+    return:
+        True sau False
+    """
+    if n < 2:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+
+def test_is_prime():
+    assert is_prime(10) is False
+    assert is_prime(1) is False
+    assert is_prime(23) is True
+
+
+def is_superprime(n):
+    """
+    Verifica daca un numar este super prim
+    param:
+        n - numarul
+    return:
+        True - daca este super prim
+        False - daca nu este super prim
+    """
+    if n <= 0:
+        return False
+    for i in range(1, len(str(n))+1):
+        s = str(n)[:i]
+        if not is_prime(int(s)):
+            return False
+    return True
+
+
+def test_is_superprime():
+    assert is_superprime(0) is False
+    assert is_superprime(239) is True
+
+
+def numere_superprime(lst):
+    """
+    Returneaza o lista de numere superprime din lst
+    param:
+        lst - lista de numre
+    return:
+        Lista de numere superprime
+    """
+    res_lst = []
+    for x in lst:
+        if is_superprime(x):
+            res_lst.append(x)
+    return res_lst
+
+
+def test_numere_superprime():
+    assert numere_superprime([239, 1, 23]) == [239, 23]
+    assert numere_superprime([9, 10, 5, 2]) == [5, 2]
+    assert numere_superprime([]) == []
+
+
 def cel_mai_mic_numar(lst, n):
     """
     Returneaza cel mai mic numar
@@ -66,6 +132,9 @@ def run_tests():
     """
     test_numere_negative()
     test_cel_mai_mic_numar()
+    test_is_prime()
+    test_is_superprime()
+    test_numere_superprime()
 
 
 def print_menu():
@@ -106,8 +175,8 @@ def main():
                 continue
             print(cel_mai_mic_numar(lst, int(i)))
         elif x == "4":
-            # TODO
-            pass
+            for i in numere_superprime(lst):
+                print(i)
         elif x == "5":
             # TODO
             pass
